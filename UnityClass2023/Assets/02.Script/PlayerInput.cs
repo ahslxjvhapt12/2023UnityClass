@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-   
-        
+        moveInput = new Vector2(Input.GetAxis(moveAxisName),Input.GetAxis(rotateAxisName));
+        if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
     }
 }
