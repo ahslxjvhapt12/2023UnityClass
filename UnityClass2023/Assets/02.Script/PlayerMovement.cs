@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,12 +26,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Rotate();
         Move(playerInput.moveInput);
     }
 
     void Update()
     {
-
+        UpdateAnimation(playerInput.moveInput);
     }
 
     public void Move(Vector2 moveInput)
@@ -44,13 +46,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate()
     {
-        var targetRotation = followCam.transform.eulerAngles;
-        //transform.eulerAngles = Vector3.up * targetRotation;
+        var targetRotation = followCam.transform.eulerAngles.y;
+        transform.eulerAngles = Vector3.up * targetRotation;
     }
 
     private void UpdateAnimation(Vector2 moveInput)
     {
-
+        animator.SetFloat("Vertical Move", moveInput.y);
+        animator.SetFloat("Horizontal Move", moveInput.x);
     }
-
 }
