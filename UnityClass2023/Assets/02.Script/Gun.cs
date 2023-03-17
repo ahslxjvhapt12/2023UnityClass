@@ -35,6 +35,13 @@ public class Gun : MonoBehaviour
         bulletLineRenderer.enabled = false;
     }
 
+    private void Start()
+    {
+        magAmmo = magCapacity;
+        state = State.Ready;
+        lastFireTime = 0f;
+    }
+
     private IEnumerator ShotEffect(Vector3 hitPos)
     {
         //muzzleFlashEffect.Play();
