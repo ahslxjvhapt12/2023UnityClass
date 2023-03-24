@@ -48,17 +48,34 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate()
     {
-        //var targetRotation = followCam.transform.eulerAngles.y;
-        //transform.eulerAngles = Vector3.up * targetRotation;
+        /*var targetRatation = followCam.transform.eulerAngles.y;
+        transform.eulerAngles = Vector3.up * targetRatation;*/
 
         Vector3 target = playerInput.mousePos;
         target.y = 0;
+
         Vector3 v = target - transform.position;
 
         float degree = Mathf.Atan2(v.x, v.z) * Mathf.Rad2Deg;
-
         float rot = Mathf.LerpAngle(transform.eulerAngles.y, degree, Time.deltaTime * rotateSpeed);
+
         transform.eulerAngles = new Vector3(0, rot, 0);
+    }
+
+    public void SetRotation()
+    {
+        //var targetRotation = followCam.transform.eulerAngles.y;
+        //transform.eulerAngles = Vector3.up * targetRotation;
+
+        Vector3 target;
+        bool isHit = playerInput.GetMouseWorldPosition(out target);
+
+        if (isHit)
+        {
+            Vector3 dir = target - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.LookRotation(dir.normalized);
+        }
     }
 
     private void UpdateAnimation(Vector2 moveInput)

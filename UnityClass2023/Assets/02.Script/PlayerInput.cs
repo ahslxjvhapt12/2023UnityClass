@@ -14,8 +14,17 @@ public class PlayerInput : MonoBehaviour
     public bool fire { get; private set; }
     public bool reload { get; private set; }
 
+    public Camera mainCam;
+
     public LayerMask whatIsGround;
     public Vector3 mousePos { get; private set; }
+
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
+
+    public Action OnFirePressed = null;
 
     void Update()
     {
@@ -25,16 +34,29 @@ public class PlayerInput : MonoBehaviour
         fire = Input.GetButtonDown(fireButtonName);
         reload = Input.GetButtonDown(reloadButtonName);
 
+        if(fire)
+        {
+            OnFirePressed?.Invoke();
+        }
+    }
+
+    public bool GetMouseWorldPosition(out Vector3 point)
+    {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
         float depth = Camera.main.farClipPlane;
 
-        if (Physics.Raycast(cameraRay, out hit, depth, whatIsGround))
+        point = Vector3.zero;
+        if (Physics.Raycast(cameraRay, out hit, depth))
         {
-            mousePos = hit.point;
+            point = hit.point;
+            return true;
         }
-
+        else
+        {
+            return false;
+        }
     }
 
     private void OnDrawGizmos()
