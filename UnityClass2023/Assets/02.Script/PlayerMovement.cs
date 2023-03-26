@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 target = playerInput.mousePos;
         target.y = 0;
-
+          
         Vector3 v = target - transform.position;
 
         float degree = Mathf.Atan2(v.x, v.z) * Mathf.Rad2Deg;
