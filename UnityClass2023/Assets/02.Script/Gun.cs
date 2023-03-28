@@ -13,6 +13,12 @@ public class Gun : MonoBehaviour
 {
     public State state { get; private set; }
 
+    private AudioSource audioSource;
+    public AudioClip shootClip;
+    public AudioClip reloadClip;
+
+
+
     public Transform firePosition; //총알나가는 위치와 방향
     //public ParticleSystem muzzleFlashEffect;
     public float bulletLineEffectTime = 0.03f;
@@ -30,6 +36,8 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
+
+        audioSource = GetComponent<AudioSource>();
         bulletLineRenderer = GetComponent<LineRenderer>();
         bulletLineRenderer.positionCount = 2; //(총구위치, 끝지점)
         bulletLineRenderer.enabled = false;
@@ -44,6 +52,8 @@ public class Gun : MonoBehaviour
 
     private IEnumerator ShotEffect(Vector3 hitPos)
     {
+        audioSource.clip = shootClip;
+        audioSource.Play();
         //muzzleFlashEffect.Play();
         bulletLineRenderer.SetPosition(0, firePosition.position);
         bulletLineRenderer.SetPosition(1, hitPos);
@@ -56,6 +66,9 @@ public class Gun : MonoBehaviour
 
     public IEnumerator ReloadRoutine()
     {
+        audioSource.clip = reloadClip;
+        audioSource.Play();
+
         state = State.Reloading;
         yield return new WaitForSeconds(reloadTime);
         magAmmo = magCapacity;
@@ -86,6 +99,13 @@ public class Gun : MonoBehaviour
             {
                 target.OnDamage(damage, hit.point, hit.normal);
             }
+            else
+            {
+                EffectManager.Instance.PlayHitEffect(hit.point,hit.normal,hit.transform);
+                
+            }
+
+
             hitPos = hit.point;
         }
         else

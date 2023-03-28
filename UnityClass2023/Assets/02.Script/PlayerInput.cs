@@ -31,7 +31,7 @@ public class PlayerInput : MonoBehaviour
         moveInput = new Vector2(Input.GetAxis(moveAxisName), Input.GetAxis(rotateAxisName));
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
 
-        fire = Input.GetButtonDown(fireButtonName);
+        fire = Input.GetButton(fireButtonName);
         reload = Input.GetButtonDown(reloadButtonName);
 
         if(fire)

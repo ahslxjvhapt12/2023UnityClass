@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Rotate();
+        if (currentSpeed > 0.2f) Rotate();
         Move(playerInput.moveInput);
     }
 

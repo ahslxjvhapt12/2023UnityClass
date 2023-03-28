@@ -9,7 +9,7 @@ public class PlayerShooter : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerMovement playerMovement;
 
-
+    private Animator playerAnimator;
 
     private void Awake()
     {
@@ -17,6 +17,7 @@ public class PlayerShooter : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
 
         playerInput.OnFirePressed += FireButtonHandle;   
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void FireButtonHandle()
@@ -30,7 +31,11 @@ public class PlayerShooter : MonoBehaviour
     {
         if (playerInput.reload)
         {
-            gun.Reload();
+            if (gun.Reload())
+            {
+                playerAnimator.SetTrigger("Reload");
+            }
+            //gun.Reload();
         }
     }
 }
