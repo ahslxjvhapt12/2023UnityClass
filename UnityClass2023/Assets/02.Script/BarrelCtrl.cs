@@ -30,7 +30,7 @@ public class BarrelCtrl : MonoBehaviour, IDamageable
 
     private void AttackBarrel(float power, Vector3 dir)
     {
-        rb.AddForce(dir,,,,);
+        //rb.AddForce(dir,,,,);
     }
 
     private void ExpBarrel()
