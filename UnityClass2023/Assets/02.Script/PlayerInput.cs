@@ -42,7 +42,7 @@ public class PlayerInput : MonoBehaviour
 
     public bool GetMouseWorldPosition(out Vector3 point)
     {
-        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray cameraRay = mainCam.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
         float depth = Camera.main.farClipPlane;

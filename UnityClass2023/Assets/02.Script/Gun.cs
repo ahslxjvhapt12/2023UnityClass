@@ -105,7 +105,6 @@ public class Gun : MonoBehaviour
                 
             }
 
-
             hitPos = hit.point;
         }
         else

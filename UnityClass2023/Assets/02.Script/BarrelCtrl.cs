@@ -17,6 +17,8 @@ public class BarrelCtrl : MonoBehaviour, IDamageable
 
     public void OnDamage(float damage, Vector3 hitPosition, Vector3 hitNormal)
     {
+        EffectManager.Instance.PlayHitEffect(hitPosition, hitNormal);
+
         if (++hitCount == 3)
         {
             //터트리기
@@ -30,7 +32,7 @@ public class BarrelCtrl : MonoBehaviour, IDamageable
 
     private void AttackBarrel(float power, Vector3 dir)
     {
-        //rb.AddForce(dir,,,,);
+        rb.AddForce(-1 * dir * power, ForceMode.Impulse);
     }
 
     private void ExpBarrel()
