@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public float targetSpeed = 6f;
     public float rotateSpeed = 4f;
 
-
     public float currentSpeed => new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
 
     void Start()
