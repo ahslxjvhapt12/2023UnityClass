@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
 
 public class GameManager : MonoBehaviour
 {
-    
+    private NavMeshSurface _navSurface;
 
     public static GameManager Instance;
 
@@ -15,29 +16,38 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Debug.LogError("Multiple GameManager is running");
         }
         Instance = this;
+
+        _navSurface = GetComponent<NavMeshSurface>();
     }
     private void Start()
     {
         _mainCam = Camera.main; //메인 카메라 캐싱
     }
 
+    private void ReBakeMesh()
+    {
+        _navSurface.BuildNavMesh();
+    }
+
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftControl))
         {
             Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             bool result = Physics.Raycast(ray, out hit, _mainCam.farClipPlane, _whatIsBase);
-            if(result)
+            if (result)
             {
                 BaseBlock block = hit.collider.GetComponent<BaseBlock>();
 
                 block?.ClickBaseBlock();
+
+                ReBakeMesh();
             }
         }
     }
